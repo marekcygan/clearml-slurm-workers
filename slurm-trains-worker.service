@@ -1,0 +1,17 @@
+[Unit]
+Description=Scaling trains agents run as slurm jobs.
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+User=cygan
+ExecStart=/home/cygan/utils/spin_train_agents.sh
+TimeoutSec=30
+Restart=always
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target
