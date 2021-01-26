@@ -1,12 +1,12 @@
 [Unit]
-Description=Scaling trains agents run as slurm jobs.
+Description=Scaling clearml agents run as slurm jobs.
 After=network.target
 After=systemd-user-sessions.service
 After=network-online.target
 
 [Service]
 User=cygan
-ExecStart=/home/cygan/utils/spin_train_agents.sh
+ExecStart=/home/cygan/utils/spin_clearml_agents.sh
 TimeoutSec=30
 Restart=always
 RestartSec=30

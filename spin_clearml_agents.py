@@ -1,10 +1,10 @@
-import trains
+import clearml
 import time
 import datetime
 import os
 
-from trains.backend_api import Session
-from trains.backend_api.services import tasks, events, projects, queues, workers
+from clearml.backend_api import Session
+from clearml.backend_api.services import tasks, events, projects, queues, workers
 
 PERIOD_BETWEEN_WORKER_CREATION = 30
 KILL_IDLE_WORKER_PERIOD = 60
@@ -33,11 +33,11 @@ while True:
                 print(f'Killing worker {worker.id}. Executing {command}.')
                 os.system(command)
 
-    task_list = trains.Task.get_tasks(task_filter=dict(system_tags=["-archived"], status=["queued"]))
+    task_list = clearml.Task.get_tasks(task_filter=dict(system_tags=["-archived"], status=["queued"]))
     print(len(task_list))
     if num_workers < MAX_WORKERS and len(task_list) > 0 and datetime.datetime.now().timestamp() > last_worker_created_timestamp + PERIOD_BETWEEN_WORKER_CREATION:
         last_worker_created_timestamp = datetime.datetime.now().timestamp()
         print(f'Creating a new worker at timestamp={last_worker_created_timestamp}.')
-        os.system('sbatch /home/cygan/utils/job_trains_agent.sh')
+        os.system('sbatch /home/cygan/utils/job_clearml_agent.sh')
 
     time.sleep(1)
